@@ -3,11 +3,11 @@ export DESIGN_NAME = aes_cipher_top
 export PLATFORM    = nangate45
 
 export VERILOG_FILES = $(sort $(wildcard $(DESIGN_HOME)/src/$(DESIGN_NICKNAME)/*.v))
-export SDC_FILE = /mnt/d/MLCAD-timing-opt/configs/aes_relax_090.sdc
+export SDC_FILE = /mnt/d/MLCAD-timing-opt/configs/aes_fixed_density_015.sdc
 
 export FLOORPLAN_DEF = $(DESIGN_HOME)/$(PLATFORM)/$(DESIGN_NICKNAME)/aes_ng45_fp.def
 
-export PLACE_DENSITY_LB_ADDON = 0.2
+export PLACE_DENSITY_LB_ADDON = 0.15
 export TNS_END_PERCENT = 100
 # workaround for high congestion in post-grt repair
 export SKIP_INCREMENTAL_REPAIR = 1
@@ -17,6 +17,6 @@ export OPENROAD_HIERARCHICAL = 1
 
 
 # MLCAD AES Agent Generated Config
-# strategy: aes_relax_090
-# mode: constraint_feasibility_search
-# clock_period: 0.9
+# strategy: aes_fixed_density_015
+# mode: fixed_clock_flow_search
+# clock_period: 0.82

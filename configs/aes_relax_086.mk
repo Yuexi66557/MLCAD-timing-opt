@@ -3,7 +3,7 @@ export DESIGN_NAME = aes_cipher_top
 export PLATFORM    = nangate45
 
 export VERILOG_FILES = $(sort $(wildcard $(DESIGN_HOME)/src/$(DESIGN_NICKNAME)/*.v))
-export SDC_FILE = /mnt/d/MLCAD-timing-opt/configs/aes_relax_090.sdc
+export SDC_FILE = /mnt/d/MLCAD-timing-opt/configs/aes_relax_086.sdc
 
 export FLOORPLAN_DEF = $(DESIGN_HOME)/$(PLATFORM)/$(DESIGN_NICKNAME)/aes_ng45_fp.def
 
@@ -17,6 +17,6 @@ export OPENROAD_HIERARCHICAL = 1
 
 
 # MLCAD AES Agent Generated Config
-# strategy: aes_relax_090
+# strategy: aes_relax_086
 # mode: constraint_feasibility_search
-# clock_period: 0.9
+# clock_period: 0.86

@@ -1,0 +1,194 @@
+[
+  {
+    "strategy": {
+      "name": "aes_fixed_density_020",
+      "mode": "fixed_clock_flow_search",
+      "clock_period": 0.82,
+      "place_density_lb_addon": 0.2,
+      "tns_end_percent": 100,
+      "description": "Original AES clock with default placement density."
+    },
+    "generated_sdc": "/mnt/d/MLCAD-timing-opt/configs/aes_fixed_density_020.sdc",
+    "config_path": "/mnt/d/MLCAD-timing-opt/configs/aes_fixed_density_020.mk",
+    "metrics": {
+      "wns": -0.02,
+      "tns": -0.15,
+      "worst_slack": -0.02,
+      "setup_violations": 19,
+      "hold_violations": 0,
+      "max_slew_violations": 0,
+      "max_fanout_violations": 0,
+      "max_cap_violations": 0,
+      "design_area_um2": 18560.0,
+      "utilization_percent": 35.0,
+      "total_power_w": 0.433,
+      "worst_ir_drop_v": 0.11,
+      "total_runtime_s": 433.86,
+      "peak_memory_mb": 2275.17,
+      "final_wirelength_um": 222399,
+      "final_vias": 115787,
+      "final_drc_violations": 0
+    },
+    "score": -190.56550000000001
+  },
+  {
+    "strategy": {
+      "name": "aes_fixed_density_015",
+      "mode": "fixed_clock_flow_search",
+      "clock_period": 0.82,
+      "place_density_lb_addon": 0.15,
+      "tns_end_percent": 100,
+      "description": "Slightly lower density addon."
+    },
+    "generated_sdc": "/mnt/d/MLCAD-timing-opt/configs/aes_fixed_density_015.sdc",
+    "config_path": "/mnt/d/MLCAD-timing-opt/configs/aes_fixed_density_015.mk",
+    "metrics": {
+      "wns": -0.02,
+      "tns": -0.22,
+      "worst_slack": -0.02,
+      "setup_violations": 31,
+      "hold_violations": 0,
+      "max_slew_violations": 0,
+      "max_fanout_violations": 0,
+      "max_cap_violations": 0,
+      "design_area_um2": 18636.0,
+      "utilization_percent": 35.0,
+      "total_power_w": 0.437,
+      "worst_ir_drop_v": 0.107,
+      "total_runtime_s": 453.72,
+      "peak_memory_mb": 2129.34,
+      "final_wirelength_um": 227536,
+      "final_vias": 117517,
+      "final_drc_violations": 0
+    },
+    "score": -229.842
+  },
+  {
+    "strategy": {
+      "name": "aes_fixed_density_025",
+      "mode": "fixed_clock_flow_search",
+      "clock_period": 0.82,
+      "place_density_lb_addon": 0.25,
+      "tns_end_percent": 100,
+      "description": "Slightly higher density addon."
+    },
+    "generated_sdc": "/mnt/d/MLCAD-timing-opt/configs/aes_fixed_density_025.sdc",
+    "config_path": "/mnt/d/MLCAD-timing-opt/configs/aes_fixed_density_025.mk",
+    "metrics": {
+      "wns": -0.03,
+      "tns": -0.23,
+      "worst_slack": -0.03,
+      "setup_violations": 22,
+      "hold_violations": 0,
+      "max_slew_violations": 0,
+      "max_fanout_violations": 0,
+      "max_cap_violations": 0,
+      "design_area_um2": 18460.0,
+      "utilization_percent": 35.0,
+      "total_power_w": 0.431,
+      "worst_ir_drop_v": 0.115,
+      "total_runtime_s": 437.91,
+      "peak_memory_mb": 1967.75,
+      "final_wirelength_um": 218074,
+      "final_vias": 116238,
+      "final_drc_violations": 0
+    },
+    "score": -208.19899999999998
+  },
+  {
+    "strategy": {
+      "name": "aes_relax_086",
+      "mode": "constraint_feasibility_search",
+      "clock_period": 0.86,
+      "place_density_lb_addon": 0.2,
+      "tns_end_percent": 100,
+      "description": "Moderately relaxed clock."
+    },
+    "generated_sdc": "/mnt/d/MLCAD-timing-opt/configs/aes_relax_086.sdc",
+    "config_path": "/mnt/d/MLCAD-timing-opt/configs/aes_relax_086.mk",
+    "metrics": {
+      "wns": -0.01,
+      "tns": -0.07,
+      "worst_slack": -0.01,
+      "setup_violations": 10,
+      "hold_violations": 0,
+      "max_slew_violations": 0,
+      "max_fanout_violations": 0,
+      "max_cap_violations": 0,
+      "design_area_um2": 17827.0,
+      "utilization_percent": 34.0,
+      "total_power_w": 0.398,
+      "worst_ir_drop_v": 0.095,
+      "total_runtime_s": 437.5,
+      "peak_memory_mb": 1918.68,
+      "final_wirelength_um": 220250,
+      "final_vias": 113628,
+      "final_drc_violations": 0
+    },
+    "score": -151.82099999999997
+  },
+  {
+    "strategy": {
+      "name": "aes_relax_090",
+      "mode": "constraint_feasibility_search",
+      "clock_period": 0.9,
+      "place_density_lb_addon": 0.2,
+      "tns_end_percent": 100,
+      "description": "Relaxed clock that achieved closure."
+    },
+    "generated_sdc": "/mnt/d/MLCAD-timing-opt/configs/aes_relax_090.sdc",
+    "config_path": "/mnt/d/MLCAD-timing-opt/configs/aes_relax_090.mk",
+    "metrics": {
+      "wns": 0.0,
+      "tns": 0.0,
+      "worst_slack": 0.01,
+      "setup_violations": 0,
+      "hold_violations": 0,
+      "max_slew_violations": 0,
+      "max_fanout_violations": 0,
+      "max_cap_violations": 0,
+      "design_area_um2": 17436.0,
+      "utilization_percent": 33.0,
+      "total_power_w": 0.372,
+      "worst_ir_drop_v": 0.0978,
+      "total_runtime_s": 437.61,
+      "peak_memory_mb": 1924.19,
+      "final_wirelength_um": 217930,
+      "final_vias": 112822,
+      "final_drc_violations": 0
+    },
+    "score": -110.10900000000001
+  },
+  {
+    "strategy": {
+      "name": "aes_relax_095",
+      "mode": "constraint_feasibility_search",
+      "clock_period": 0.95,
+      "place_density_lb_addon": 0.2,
+      "tns_end_percent": 80,
+      "description": "More relaxed clock with lighter TNS repair."
+    },
+    "generated_sdc": "/mnt/d/MLCAD-timing-opt/configs/aes_relax_095.sdc",
+    "config_path": "/mnt/d/MLCAD-timing-opt/configs/aes_relax_095.mk",
+    "metrics": {
+      "wns": 0.0,
+      "tns": 0.0,
+      "worst_slack": 0.04,
+      "setup_violations": 0,
+      "hold_violations": 0,
+      "max_slew_violations": 0,
+      "max_fanout_violations": 0,
+      "max_cap_violations": 0,
+      "design_area_um2": 17159.0,
+      "utilization_percent": 33.0,
+      "total_power_w": 0.348,
+      "worst_ir_drop_v": 0.0818,
+      "total_runtime_s": 423.69,
+      "peak_memory_mb": 2008.63,
+      "final_wirelength_um": 216935,
+      "final_vias": 111766,
+      "final_drc_violations": 0
+    },
+    "score": -109.8135
+  }
+]
