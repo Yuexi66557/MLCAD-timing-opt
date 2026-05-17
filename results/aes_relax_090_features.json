@@ -1,0 +1,31 @@
+{
+  "platform": "nangate45",
+  "design": "aes",
+  "variant": "base",
+  "report_dir": "/home/yuexi/OpenROAD-flow-scripts/flow/reports/nangate45/aes/base",
+  "log_dir": "/home/yuexi/OpenROAD-flow-scripts/flow/logs/nangate45/aes/base",
+  "result_dir": "/home/yuexi/OpenROAD-flow-scripts/flow/results/nangate45/aes/base",
+  "final_gds_exists": true,
+  "final_def_exists": true,
+  "final_metrics": {
+    "report": "/home/yuexi/OpenROAD-flow-scripts/flow/reports/nangate45/aes/base/6_finish.rpt",
+    "tns": 0.0,
+    "wns": 0.0,
+    "worst_slack": 0.01,
+    "setup_violation_count": 0,
+    "hold_violation_count": 0,
+    "max_slew_violation_count": 0,
+    "max_fanout_violation_count": 0,
+    "max_cap_violation_count": 0
+  },
+  "area_power": {
+    "design_area_um2": 17436.0,
+    "utilization_percent": 33.0,
+    "total_power_w": 0.372,
+    "worst_ir_drop_v": 0.0978
+  },
+  "runtime": {
+    "total_runtime_s": 425.4,
+    "peak_memory_mb": 1985.48
+  }
+}
