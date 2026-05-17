@@ -1,0 +1,426 @@
+# MLCAD Learning Notes — Day 3
+
+## Objective
+
+Today’s objective was to:
+
+1. Successfully compile and deploy OpenROAD in WSL2 Ubuntu.
+2. Run the first complete OpenROAD baseline ASIC implementation flow.
+3. Understand the meaning of timing reports and physical design metrics.
+4. Begin connecting OpenROAD timing analysis to a future Python + LLM optimization workflow.
+
+---
+
+# 1. Environment Deployment Progress
+
+## Successfully Completed
+
+### WSL2 + Ubuntu Environment
+
+* Installed Ubuntu 24.04 under WSL2.
+* Connected VSCode to WSL Remote environment.
+* Configured Linux development environment.
+
+### OpenROAD Build
+
+Successfully compiled and installed OpenROAD locally.
+
+Verification command:
+
+```bash
+openroad -version
+```
+
+Output:
+
+```text
+26Q2-892-g5cee43de60
+```
+
+### Main Environment Problems Solved
+
+During installation, multiple real-world EDA dependency issues were encountered and solved:
+
+* KLayout certificate verification failure
+* Missing CMake
+* Missing SWIG
+* SWIG version mismatch (required >= 4.3)
+* Missing absl
+* Missing spdlog
+* Missing Eigen3
+* Missing LEMON
+* GitHub TLS/network interruptions
+* OpenROAD PATH configuration
+* DependencyInstaller build interruptions
+
+This process demonstrated how large open-source EDA systems rely heavily on:
+
+* C++ build systems
+* external optimization libraries
+* timing libraries
+* physical design toolchains
+
+---
+
+# 2. First OpenROAD Baseline Flow
+
+## Benchmark Used
+
+The first benchmark selected was:
+
+```text
+nangate45/gcd
+```
+
+Reason:
+
+* Small design
+* Fast runtime
+* Stable benchmark
+* Common introductory OpenROAD example
+
+---
+
+## Executed Command
+
+```bash
+cd ~/OpenROAD-flow-scripts/flow
+
+make DESIGN_CONFIG=./designs/nangate45/gcd/config.mk
+```
+
+---
+
+## Flow Runtime Summary
+
+Final output summary:
+
+```text
+Total 78 seconds
+Peak memory ~1020 MB
+```
+
+This means the entire RTL-to-GDS flow completed successfully.
+
+---
+
+# 3. ASIC Physical Design Flow Understanding
+
+The OpenROAD flow converts RTL Verilog into a physically manufacturable ASIC layout.
+
+The major stages are:
+
+| Stage           | Description                            |
+| --------------- | -------------------------------------- |
+| Synthesis       | Converts RTL into gate-level netlist   |
+| Floorplan       | Defines chip core area and utilization |
+| Placement       | Places standard cells physically       |
+| CTS             | Builds clock distribution tree         |
+| Routing         | Connects wires on metal layers         |
+| Timing Analysis | Evaluates setup/hold timing            |
+| GDS Generation  | Produces final layout database         |
+
+---
+
+# 4. Generated Layout Files
+
+The flow generated:
+
+```text
+6_final.gds
+```
+
+This is the final ASIC physical layout.
+
+Other generated visualization files include:
+
+* final_placement.webp
+* final_routing.webp
+* final_congestion.webp
+* final_worst_path.webp
+* final_clocks.webp
+* final_ir_drop.webp
+
+These visualizations represent:
+
+* cell placement
+* routing congestion
+* critical timing paths
+* clock tree structure
+* power integrity
+
+---
+
+# 5. Timing Analysis Concepts Learned
+
+## Slack
+
+Core timing formula:
+
+```text
+Slack = Required Time - Arrival Time
+```
+
+Meaning:
+
+* Slack > 0 → timing met
+* Slack < 0 → timing violation
+
+Example:
+
+```text
+Slack = -0.03 ns
+```
+
+This means the path arrives 30 ps too late.
+
+---
+
+## WNS (Worst Negative Slack)
+
+Formula:
+
+```text
+WNS = minimum slack among all paths
+```
+
+Observed result:
+
+```text
+WNS = -0.03 ns
+```
+
+Meaning:
+
+The worst path violates timing by 30 ps.
+
+---
+
+## TNS (Total Negative Slack)
+
+Formula:
+
+```text
+TNS = sum of all negative slacks
+```
+
+Observed result:
+
+```text
+TNS = -0.30 ns
+```
+
+Meaning:
+
+All violating paths combined miss timing by 0.30 ns.
+
+---
+
+## Setup Violations
+
+Observed:
+
+```text
+setup violation count = 11
+```
+
+Meaning:
+
+11 timing paths fail setup timing.
+
+---
+
+## Hold Violations
+
+Observed:
+
+```text
+hold violation count = 0
+```
+
+Meaning:
+
+No hold timing failures exist.
+
+---
+
+# 6. Timing Evolution Through the Flow
+
+Observed timing trend:
+
+| Stage            | WNS      |
+| ---------------- | -------- |
+| Floorplan        | +0.05 ns |
+| Global Placement | +0.01 ns |
+| CTS              | -0.03 ns |
+| Routing          | -0.04 ns |
+| Final            | -0.03 ns |
+
+---
+
+## Important Insight
+
+Timing became worse after routing.
+
+Reason:
+
+Before routing:
+
+* wire length is estimated
+* parasitic RC is approximate
+
+After routing:
+
+* real wire geometry exists
+* real resistance and capacitance are extracted
+* delay increases
+
+Therefore:
+
+```text
+Routing parasitics degrade timing.
+```
+
+This is one of the core problems in timing closure research.
+
+---
+
+# 7. Physical Meaning of Key Metrics
+
+## Capacitance
+
+Represents:
+
+* wire capacitance
+* gate input capacitance
+* coupling capacitance
+
+Large capacitance causes:
+
+* larger delay
+* slower transitions
+* timing degradation
+
+---
+
+## Slew
+
+Represents signal transition speed.
+
+Poor slew means:
+
+* slower rise/fall edges
+* degraded timing
+* higher power/noise
+
+---
+
+## Fanout
+
+Represents how many loads one gate drives.
+
+Larger fanout:
+
+* increases effective capacitance
+* increases delay
+* worsens slack
+
+---
+
+# 8. OpenROAD Timing Repair
+
+Observed commands:
+
+```text
+repair_timing
+Repairing violating endpoints...
+```
+
+OpenROAD automatically attempts:
+
+* buffer insertion
+* gate resizing
+* VT swapping
+* gate cloning
+
+However, reports showed:
+
+```text
+Unable to repair all setup violations.
+```
+
+This indicates current heuristics are not sufficient to completely close timing.
+
+---
+
+# 9. Relation to MLCAD Contest
+
+This directly connects to the MLCAD competition objective.
+
+The competition goal is essentially:
+
+```text
+Use LLMs/agents to discover better timing optimization strategies.
+```
+
+Potential future improvements include:
+
+* predicting routing congestion earlier
+* modifying placement strategies
+* adaptive buffer insertion
+* dynamic gate sizing
+* congestion-aware timing optimization
+* timing-driven placement tuning
+
+---
+
+# 10. Current Technical Position
+
+At the end of Day 3:
+
+I can now:
+
+* deploy OpenROAD locally
+* run a complete ASIC backend flow
+* generate GDS layouts
+* read timing reports
+* understand WNS/TNS/slack concepts
+* identify setup timing violations
+* interpret timing degradation after routing
+* understand OpenROAD timing repair behavior
+
+This means the workflow has progressed from:
+
+```text
+environment setup
+```
+
+to:
+
+```text
+real EDA timing optimization workflow
+```
+
+---
+
+# 11. Next Direction
+
+Next steps:
+
+1. Build Python timing-report parsers.
+2. Automatically extract:
+
+   * WNS
+   * TNS
+   * setup violations
+   * critical paths
+   * congestion information
+3. Connect parsed timing data to an LLM.
+4. Generate optimization suggestions automatically.
+5. Experiment with modifying OpenROAD parameters and observing timing changes.
+
+Long-term objective:
+
+```text
+Build a simple OpenROAD + Python + LLM timing optimization prototype suitable for MLCAD-style research and summer-camp interviews.
+```

@@ -1,0 +1,113 @@
+# Day 2 – Environment Setup and Linux Development Workflow
+
+## Goal
+
+The goal of Day 2 was to build a Linux-based development environment for OpenROAD and AI-assisted EDA research.
+
+The development environment includes:
+
+- WSL2 Ubuntu
+- VSCode Remote WSL
+- Python
+- Git
+- OpenROAD-flow-scripts workspace
+
+---
+
+## What I Did
+
+### 1. Installed WSL2 and Ubuntu
+
+I installed WSL2 on Windows and configured Ubuntu Linux as the main development environment.
+
+This allows Linux-based EDA tools such as OpenROAD to run efficiently while still using Windows as the host operating system.
+
+---
+
+### 2. Configured VSCode Remote WSL
+
+I connected VSCode to the Ubuntu environment using the WSL extension.
+
+This enables:
+
+- Linux terminal development
+- Python scripting
+- OpenROAD flow execution
+- future AI/LLM integration
+
+inside a unified environment.
+
+---
+
+### 3. Installed Development Tools
+
+Installed:
+
+- Python 3
+- Git
+- build-essential
+- curl/wget
+
+These tools will later be used for:
+
+- automation scripts
+- flow orchestration
+- timing report parsing
+- optimization experiments
+
+---
+
+### 4. Built Project Workspace
+
+Created the project structure:
+
+- code/
+- scripts/
+- reports/
+- results/
+- slides/
+- notes/
+- benchmarks/
+
+This workspace will be used to organize the timing optimization framework and experimental results.
+
+---
+
+### 5. Downloaded OpenROAD-flow-scripts
+
+Cloned the official OpenROAD-flow-scripts repository from GitHub.
+
+This repository contains:
+
+- benchmark designs
+- Tcl flow scripts
+- ASIC physical design automation flow
+
+which will serve as the foundation for the project.
+
+---
+
+## Key Understanding
+
+Today I realized that OpenROAD is not simply a tool, but a complete ASIC physical design workflow.
+
+The flow includes:
+
+- placement
+- clock tree synthesis
+- routing
+- timing optimization
+- static timing analysis
+
+This project aims to explore whether AI/LLM methods can assist timing optimization decisions inside this workflow.
+
+---
+
+## Next Step
+
+Next, I will:
+
+- run the first baseline OpenROAD flow
+- analyze timing reports
+- understand WNS/TNS/slack
+- start building Python-based report parsers

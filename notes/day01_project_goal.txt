@@ -1,0 +1,25 @@
+# Day 1: Project Goal
+
+## My final goal
+
+I want to build a small but complete AI + EDA prototype for summer-camp interview preparation.
+
+The project should show that I understand:
+
+- timing optimization
+- OpenROAD flow
+- Python automation
+- report analysis
+- basic AI/LLM-assisted decision making
+
+## What this project is not
+
+This project does not aim to beat top contest teams.
+
+It aims to become a convincing research-style prototype.
+
+## Final story for teachers
+
+I explored whether timing optimization can be made design-aware by analyzing OpenROAD timing reports and automatically selecting optimization strategies.
+
+This demonstrates my interest and potential in AI for EDA.

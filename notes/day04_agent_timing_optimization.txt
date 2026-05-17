@@ -1,0 +1,179 @@
+MLCAD 2026 – Day04 Notes
+Topic: Agent-based Timing Optimization Prototype using OpenROAD
+
+1. Objective
+Today’s goal was to build an AI-guided timing optimization prototype on top of the OpenROAD flow. 
+The prototype should automatically:
+- extract timing/QoR features from OpenROAD reports,
+- generate optimization strategies,
+- modify OpenROAD design constraints/configurations,
+- rerun physical design,
+- compare QoR results,
+- and select the best strategy.
+
+This establishes the core framework for an LLM-ready EDA optimization workflow.
+
+------------------------------------------------------------
+2. Baseline OpenROAD Flow
+The baseline design used:
+- Platform: nangate45
+- Design: gcd
+
+The OpenROAD flow was successfully executed through:
+- synthesis
+- floorplan
+- placement
+- CTS
+- global routing
+- detailed routing
+- final report generation
+
+Key baseline timing metrics:
+- WNS = -0.01 ns
+- TNS = -0.04 ns
+- Setup violations = 6
+
+This indicates that the original timing target was not fully closed.
+
+------------------------------------------------------------
+3. Feature Extraction
+Implemented:
+- agent/feature_extractor.py
+
+This script automatically parses:
+- WNS
+- TNS
+- worst slack
+- setup/hold violations
+- routing QoR
+- wirelength
+- vias
+- runtime information
+
+The extracted features are stored as JSON files for later agent reasoning.
+
+Generated files:
+- gcd_baseline_features.json
+- gcd_optimized_features.json
+
+------------------------------------------------------------
+4. Agent Policy Generation
+Implemented:
+- agent/llm_policy.py
+
+This module simulates an LLM-style policy generation stage.
+
+Current version:
+- heuristic/rule-based
+- not yet connected to an external LLM API
+
+The agent analyzes timing violations and generates candidate optimization strategies.
+
+------------------------------------------------------------
+5. Strategy Application
+Implemented:
+- agent/apply_strategy.py
+
+The script automatically:
+- generates modified config.mk files,
+- modifies OpenROAD parameters,
+- prepares optimization runs.
+
+------------------------------------------------------------
+6. Multi-Strategy Search
+Implemented:
+- agent/search_strategies.py
+
+This is the core optimization module.
+
+The agent automatically generated multiple timing optimization strategies:
+- baseline_clock_046
+- clock_049
+- clock_052
+- density_055_clock_049
+
+The flow automatically:
+1. generates modified SDC timing constraints,
+2. reruns OpenROAD,
+3. evaluates QoR,
+4. compares timing results,
+5. selects the best strategy.
+
+------------------------------------------------------------
+7. Key Optimization Result
+Best strategy discovered:
+- Strategy: clock_052
+- Clock period: 0.52 ns
+
+Final optimized QoR:
+- WNS = 0.00 ns
+- TNS = 0.00 ns
+- Setup violations = 0
+- DRC violations = 0
+
+This demonstrates successful timing closure after agent-guided constraint exploration.
+
+------------------------------------------------------------
+8. Important Technical Observation
+The earlier density-only optimization experiments showed almost no timing improvement.
+
+This suggests:
+- the timing bottleneck of the gcd design is not mainly placement-density limited,
+- timing closure is more sensitive to clock constraints.
+
+This motivated the transition from:
+- placement parameter tuning
+to:
+- constraint-aware timing optimization.
+
+------------------------------------------------------------
+9. Current Limitation
+The current prototype does NOT yet call a real LLM API.
+
+Current architecture:
+- OpenROAD QoR extraction
+- heuristic agent reasoning
+- automatic strategy search
+- OpenROAD rerun loop
+
+Therefore, the current system is best described as:
+“LLM-ready” or “LLM-inspired” timing optimization framework.
+
+------------------------------------------------------------
+10. Files Implemented
+Implemented scripts:
+- feature_extractor.py
+- llm_policy.py
+- apply_strategy.py
+- compare_results.py
+- search_strategies.py
+- run_agent.py
+
+Generated outputs:
+- strategy_search_results.json
+- best_strategy.json
+- final_demo_summary.json
+
+------------------------------------------------------------
+11. Next Steps
+Potential future improvements:
+- integrate real LLM APIs (GPT / DeepSeek / Llama)
+- perform timing repair under fixed clock targets
+- add buffer insertion policy exploration
+- add congestion-aware optimization
+- support larger benchmark designs
+- implement reinforcement-learning style search
+- automate prompt generation from QoR reports
+
+------------------------------------------------------------
+12. Summary
+A complete agent-style OpenROAD timing optimization loop was successfully implemented.
+
+The prototype can:
+- analyze timing reports,
+- generate optimization strategies,
+- modify OpenROAD constraints,
+- rerun physical design,
+- and automatically identify improved timing configurations.
+
+This establishes a functional foundation for future LLM-guided EDA optimization research.

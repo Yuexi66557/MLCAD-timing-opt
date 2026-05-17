@@ -1,0 +1,21 @@
+1. OpenROAD Baseline Flow Understanding
+The baseline flow transforms RTL into final routed layout. For the gcd design, the main stages are synthesis, floorplan, placement, CTS, routing, and final report generation.
+
+2. Where the Agent Is Inserted
+The agent does not replace OpenROAD internal C++ algorithms yet. Instead, it works at the flow-control level. It reads timing/QoR reports, generates candidate constraints and configuration parameters, and reruns OpenROAD.
+
+3. Strategy Parameters Modified by the Agent
+The current prototype modifies:
+- clock_period in SDC
+- CORE_UTILIZATION in config.mk
+- PLACE_DENSITY_LB_ADDON in config.mk
+- TNS_END_PERCENT in config.mk
+
+4. Why Placement Matters
+Placement affects wirelength, congestion, and parasitic RC. The fixed-clock experiments show that simply reducing utilization does not necessarily improve timing, because more whitespace can also increase wirelength.
+
+5. Why Constraint Feasibility Matters
+The original 0.46 ns target remains difficult to close. The LLM-generated constraint-feasibility strategy relaxes the clock to 0.55 ns and achieves WNS=0, TNS=0, and zero setup violations.
+
+6. Difference from Basic OpenROAD Tutorial
+The HackMD-style OpenROAD notes explain what each flow stage does. My project goes further by adding an LLM/agent layer that automatically explores design-specific strategies and selects the best QoR result.
